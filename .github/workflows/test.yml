@@ -19,5 +19,12 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     
+    - name: Instalar navegador Chrome
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+    
     - name: Ejecutar pruebas con Maven
       run: mvn clean test
+      env:
+        CHROME_BIN: /usr/bin/google-chrome
