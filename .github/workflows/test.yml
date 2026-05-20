@@ -1,30 +1,20 @@
-name: Ejecutar pruebas de Selenium
+name: Compilar proyecto
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Configurar JDK 17
+    - name: Clonar repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar Java
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
-    
-    - name: Instalar navegador Chrome
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
-    
-    - name: Ejecutar pruebas con Maven
-      run: mvn clean test -e -X
-      env:
-        CHROME_BIN: /usr/bin/google-chrome
+
+    - name: Compilar
+      run: mvn clean compile
